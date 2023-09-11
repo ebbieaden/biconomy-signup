@@ -125,7 +125,7 @@ export default function Wallet() {
 
                 {smartAccount && (
                     <Fragment>
-                        {/*Add transfer Component here */}
+                        {/* Add transfer Component here */}
                         <Transfer smartAccount={smartAccount} />
                     </Fragment>
                 )}
