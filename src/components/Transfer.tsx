@@ -28,7 +28,7 @@ export default function Transfer({ smartAccount }: { smartAccount: BiconomySmart
         getSmartContractAddress();
     }, []);
 
-    async function performTransfer() {
+    async function transfer() {
         try {
             // initialize the loading state
             const readProvider = smartAccount.provider;
