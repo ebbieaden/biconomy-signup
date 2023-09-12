@@ -146,7 +146,7 @@ export default function Transfer({ smartAccount }: { smartAccount: BiconomySmart
                         />
                         <button 
                             className="w-32 rounded-lg bg-gradient-to-r from-green-400 to-blue-500 px-4 py-2 font-medium transition-all hover:from-green-500 hover:to-blue-600"
-                            onClick={performTransfer}
+                            onClick={transfer}
                         >
                             Transfer
                         </button>
