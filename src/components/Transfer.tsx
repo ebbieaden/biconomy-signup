@@ -1,5 +1,5 @@
 import { BiconomySmartAccount } from "@biconomy/account";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { USDC_CONTRACT_ADDRESS, ERC20ABI } from "@/constants";
 import {
@@ -8,28 +8,27 @@ import {
     SponsorUserOperationDto,
 } from "@biconomy/paymaster"
 
-export default function transfer({
-    smartAccount,
-}: {
-    smartAccount: BiconomySmartAccount;
-}) {
+export default function Transfer({ smartAccount }: { smartAccount: BiconomySmartAccount }) {
+    const [smartContractAddress, setSmartContractAddress] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [amount, setAmount] = useState(0);
     const [recipient, setRecipient] = useState("");
 
-    const [smartContractAddress, setSmartContractAddress] = useState("");
+    // async function getSmartContractAddress() {
+    //     const smartContractAddress = await smartAccount.getSmartAccountAddress();
+    //     setSmartContractAddress(smartContractAddress);
+    // }
 
     async function getSmartContractAddress() {
         const smartContractAddress = await smartAccount.getSmartAccountAddress();
         setSmartContractAddress(smartContractAddress);
     }
-
     // Get the address of the smart contract when the component loads
     useEffect(() => {
         getSmartContractAddress();
     }, []);
 
-    async function transfer() {
+    async function performTransfer() {
         try {
             // initialize the loading state
             const readProvider = smartAccount.provider;
@@ -116,9 +115,10 @@ export default function transfer({
             window.alert("Transaction successful!");
         } catch (error) {
             console.error(error);
+            window.alert("Transaction failed. Please check the console for error.")
+        } finally {
+            setIsLoading(false);
         }
-
-        setIsLoading(false);
     }
 
     return (
@@ -144,8 +144,9 @@ export default function transfer({
                             placeholder="Enter amount"
                             onChange={(e) => setAmount(Number(e.target.value))}
                         />
-                        <button className="w-32 rounded-lg bg-gradient-to-r from-green-400 to-blue-500 px-4 py-2 font-medium transition-all hover:from-green-500 hover:to-blue-600"
-                            onClick={transfer}
+                        <button 
+                            className="w-32 rounded-lg bg-gradient-to-r from-green-400 to-blue-500 px-4 py-2 font-medium transition-all hover:from-green-500 hover:to-blue-600"
+                            onClick={performTransfer}
                         >
                             Transfer
                         </button>
